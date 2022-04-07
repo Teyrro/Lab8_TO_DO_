@@ -142,24 +142,5 @@ namespace Lab8_TO_DO.ViewModels
                 taskCount[i] = 1;
             }
         }
-
-        public void AddImage(TaskData item, string source)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (Tasks[i].Contains(item))
-                {
-                    foreach (TaskData task in Tasks[i])
-                    {
-                        if (task.Equals(item))
-                        {
-                            task.Path = source;
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-        }
     }
 }

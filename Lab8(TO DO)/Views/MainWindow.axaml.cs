@@ -60,7 +60,7 @@ namespace Lab8_TO_DO.Views
 
                 string[]? path = await window.ShowAsync((Window)this.VisualRoot);
                 if (path != null)
-                    context.AddImage(item, string.Join(@"\", path));
+                    item.Path = string.Join(@"\", path);
             }
         }
         private async void ClickEventAboutDialog(object sender, RoutedEventArgs e)
