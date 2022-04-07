@@ -1,0 +1,136 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Lab8_TO_DO.ViewModels"
+		xmlns:local="using:Lab8_TO_DO.Models"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450"
+		MinHeight="450" MinWidth="650" Height="500" Width="700"
+        x:Class="Lab8_TO_DO.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+		Background="#36393F"
+		>
+	
+	<Window.Styles>
+		<StyleInclude Source="/Views/StylesApp.axaml"/>
+	</Window.Styles>
+
+	<Window.Resources>
+		<local:BitmapAssetValueConverter x:Key="Convert"/>
+		
+		<DataTemplate x:Key="general">
+			<Expander Header="{Binding Name}"
+						HorizontalContentAlignment="Stretch">
+				
+				<StackPanel>
+					<TextBlock Text="Header"/>
+					<TextBox Text="{Binding Name}"/>
+					<TextBlock Text="Task"/>
+					<TextBox Text="{Binding Text}"
+							 Height="100"
+							 TextWrapping="Wrap"/>
+					
+					<Image Height="100"
+							Width="100"
+							Source="{Binding Path, Converter={StaticResource Convert}}"/>
+					
+					<Button Content="Add Image"
+							Click="OnClickAddImage"
+							Margin="0, 10, 0, 0"/>
+					
+					<Button Content="Delete"
+							Command="{Binding $parent[Window].DataContext.DeletePlannedTask}"
+							CommandParameter="{Binding}"
+							Margin="0, 5, 0, 0" />
+				</StackPanel>
+			</Expander>
+		</DataTemplate>
+
+	</Window.Resources>
+
+	<Grid RowDefinitions="Auto, *" 
+		  ColumnDefinitions="*, *, *">
+		
+		
+		<Grid Grid.Row="0" Grid.ColumnSpan="3">
+			<Menu>
+				<MenuItem Header="File">
+					<MenuItem Header="New File" 
+								Command="{Binding NewTasks}"/>
+					<MenuItem Header="Open" 
+								Name="LoadFileButton"/>
+					<MenuItem Header="Save As..." 
+								Name="SaveFileButton"/>
+					<Separator/>
+					<MenuItem Header="Exit" 
+								Name="ExitButton"/>
+				</MenuItem>
+				<MenuItem Header="About" 
+							Click="ClickEventAboutDialog"/>
+			</Menu>
+		</Grid>
+
+		<Grid Grid.Column="0" 
+			  Grid.Row="1" 
+			  RowDefinitions="Auto, *, Auto">
+			<Border Padding="10">
+				<TextBlock Text="To Do"
+						   TextAlignment="Center"/>
+			</Border>
+			<Border Grid.Row="1">
+				<ScrollViewer>
+					<ItemsControl Items="{Binding Tasks[0]}" 
+								  ItemTemplate="{StaticResource general}" />
+				</ScrollViewer>
+			</Border>
+			<Border Grid.Row="2">
+				<Button Content="Add"
+						Command="{Binding AddTask}" 
+						CommandParameter="0"/>
+			</Border>
+		</Grid>
+
+		<Grid Grid.Column="1"
+			  Grid.Row="2"
+			  RowDefinitions="Auto, *, Auto">
+			<Border Padding="10">
+				<TextBlock Text="Doing"
+						   TextAlignment="Center"/>
+			</Border>
+			<Border Grid.Row="1">
+				<ScrollViewer>
+					<ItemsControl Items="{Binding Tasks[1]}" 
+								  ItemTemplate="{StaticResource general}"/>
+				</ScrollViewer>
+			</Border>
+			<Border Grid.Row="2">
+				<Button Content="Add"
+						Command="{Binding AddTask}"
+						CommandParameter="1"/>
+			</Border>
+		</Grid>
+
+		<Grid Grid.Column="2"
+			  Grid.Row="1" 
+			  RowDefinitions="Auto, *, Auto">
+			<Border Padding="10">
+				<TextBlock Text="Done" 
+						   TextAlignment="Center"/>
+			</Border>
+			<Border Grid.Row="1">
+				<ScrollViewer>
+					<ItemsControl Items="{Binding Tasks[2]}" 
+								  ItemTemplate="{StaticResource general}"/>
+				</ScrollViewer>
+			</Border>
+			<Border Grid.Row="2">
+				<Button Content="Add"
+						Command="{Binding AddTask}"
+						CommandParameter="2"/>
+			</Border>
+		</Grid>
+			
+	</Grid>
+	
+	
+</Window>
